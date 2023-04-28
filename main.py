@@ -8,7 +8,7 @@ import seaborn as sns
 from midiutil import MIDIFile
 
 path = "./audio/"
-filename = path + "C blues scale.mp3"
+filename = path + "C major scale.mp3"
 
 # Example Frequencies
 C1, C2, C3, C4, C5, C6, C7 = 32.7, 65.4, 130.8, 261.6, 523.3, 1046.5, 2093
@@ -21,7 +21,7 @@ beat_length = 20 # error length for beats (to remove degenerate beats)
 pitch_frames = 10 # number of additional frames to use when determining pitch
 note_difference = 10 # how far apart a group of pitches has to be to be considered a separate note
 method = "signal" # which fft method to use: mamual or signal
-pitch_method = "easy" # which pitch detection method to use: groups (for multiple notes) or easy
+pitch_method = "groups" # which pitch detection method to use: groups (for multiple notes) or easy
 bins = 78 # number of frequency bins (12 bins per octave)
 
 # Dont change these!
@@ -170,12 +170,12 @@ elif method == "signal":
     notes = notes.transpose()
 
     # Plot it
-    plt.imshow(d_notes.transpose(), aspect = "auto", interpolation = "none")
-    #plt.scatter(beats, pitches)
+    plt.imshow(notes, aspect = "auto", interpolation = "none")
+    plt.scatter(beats, pitches)
     plt.gca().invert_yaxis()
-    #plt.colorbar()
-    #plt.vlines(beats, ymin = 0, ymax = bins-1, color = "white", linewidth = 0.5)
-    #plt.hlines(24, xmin = 0, xmax = len(notes[0]) - 1, color = "black")
+    plt.colorbar()
+    plt.vlines(beats, ymin = 0, ymax = bins-1, color = "white", linewidth = 0.5)
+    plt.hlines(24, xmin = 0, xmax = len(notes[0]) - 1, color = "black")
     plt.title("C Major Scale")
     yticks = np.linspace(0, bins, 10)
     ylabels = [int(C[0][int(i)]) for i in yticks]
